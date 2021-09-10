@@ -899,13 +899,16 @@ def SupplyandDemandOptimization(Building_Var_Inputs, plot_profiles=False):
         for day_name, hours in hours_dict.items():
             plt.figure(figsize=(10,5))
             x = range(24)
-            y_EV = EV_Hourly_Charging_Load[hours,:]
+            y_EV = EV_Hourly_Charging_Load[hours]
             y_Buildings = Aggregate_Demand[hours,0]
-            plt.plot(x=x,y=y_EV, label='EV_Charging_Demand', s=1, color='blue')
-            plt.plot(x=x,y=y_Buildings, label='Bldgs_Electricity_Demand', s=1, color='red')
+            plt.plot(x,y_EV, label='EV_Charging_Demand', linewidth=2, color='blue')
+            plt.plot(x,y_Buildings, label='Bldgs_Electricity_Demand', linewidth=2, color='red')
             plt.xlabel(r'Hour')
             plt.ylabel(r'Electricity_Load (kW)')
+            plt.legend()
             plt.savefig('EV_vs_Bldgs_E_Load_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
+            
+        # y_
         sys.exit(1)
 
 

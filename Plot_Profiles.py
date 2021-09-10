@@ -17,9 +17,9 @@ Building 1	Building 2	Building 3	Building 4	Building 5	Building 6	Building 7	Bui
 SupplyandDemandOptimization(neighborhood1_var_inputs, plot_profiles=True)
 
 
-neighborhood2 = [379,468,178,268,3,490,187,191,115,987,175,116,64,346,29,16,640,12,94,337,1,25,16,28,0]
+neighborhood2_var_inputs = [379,468,178,268,3,490,187,191,115,987,175,116,64,346,29,16,640,12,94,337,1,25,16,28,0]
 '''
 Building 1	Building 2	Building 3	Building 4	Building 5	Building 6	Building 7	Building 8	Building 9	Building 10	Building 11	Building 12	Building 13	Building 14	Building 15	Building 16	Building 17	Building 18	Building 19	Building 20	Building 21	Engine_Var	Chiller_Var	Comm_Solar_Var	EV_Load_Ratio	Total_Electricity_Demand	LCC_Total	Total_GHG	LCC (w/o purchase from grid for EV)	Res_Area_Percents 1	Office_Area_Percents 2	Comm_Area_Percents 3	Warehouse_Area_Percents 4	Hospital_Area_Percents 5	Hotel_Area_Percents 6	Educ_Area_Percents 7	Site_FAR	Average_Height	Total_GFA	GHG (w/o grid for EV)	Total_Electric_Load_on_CCHP	Peak_Electric_Load_on_CCHP	Peak_Electricity_Demand	Total_EV_Demand	Peak_EV_Demand	Overall_Efficiency	Total E Demand bldgs / Total EV Demand	Peak E Demand bldgs / Peak EV Demand
 379	468	178	268	3	490	187	191	115	987	175	116	64	346	29	16	640	12	94	337	1	25	16	28	0	3016995147	10437080792	1231980.487	10413719804	0.388355	0.130862	0.094407	0.014898	0.194585	0.13448	0.042414	3.101567	44.347724	20771147	827307.5055	3205142643	577746.0823	546346.9511	56341962.97	18562.84242	0.187252	54	29
 '''
-SupplyandDemandOptimization(neighborhood1_var_inputs, plot_profiles=True)
+SupplyandDemandOptimization(neighborhood2_var_inputs, plot_profiles=True)
