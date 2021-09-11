@@ -897,19 +897,81 @@ def SupplyandDemandOptimization(Building_Var_Inputs, plot_profiles=False):
         Sep_1_hours = Jan_1_hours + 243*24
         hours_dict = {'Jan1':Jan_1_hours, 'May1':May_1_hours, 'Sep1':Sep_1_hours}
         for day_name, hours in hours_dict.items():
-            plt.figure(figsize=(10,5))
+            plt.close('all')
             x = range(24)
-            y_EV = EV_Hourly_Charging_Load[hours]
-            y_Buildings = Aggregate_Demand[hours,0]
-            plt.plot(x,y_EV, label='EV_Charging_Demand', linewidth=2, color='blue')
-            plt.plot(x,y_Buildings, label='Bldgs_Electricity_Demand', linewidth=2, color='red')
-            plt.xlabel(r'Hour')
-            plt.ylabel(r'Electricity_Load (kW)')
-            plt.legend()
-            plt.savefig('EV_vs_Bldgs_E_Load_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
             
+            # Plot the EV charging demand and the electric demand of the buildings throughout the 3 selected days
+            plt.figure(figsize=(10,5))
+            y_EV = EV_Hourly_Charging_Load[hours]/1000
+            y_Buildings = Aggregate_Demand[hours,0]/1000
+            plt.plot(x, y_EV, label='EV_Charging_Demand', linewidth=2, color='blue')
+            plt.plot(x, y_Buildings, label='Bldgs_Electric_Demand', linewidth=2, color='red')
+            plt.xlabel(r'Hour')
+            plt.ylabel(r'Electric_Demand (MW)')
+            plt.legend()
+            plt.savefig('figures/EV_vs_Bldgs_E_Load_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
+            
+            
+            # Plot the normalized EV charging demand and the electric demand of the buildings throughout the 3 selected days
+            plt.figure(figsize=(10,5))
+            y_EV_nrm = EV_Hourly_Charging_Load[hours]/max(EV_Hourly_Charging_Load[hours])
+            y_Buildings_nrm = Aggregate_Demand[hours,0]/max(Aggregate_Demand[hours,0])
+            plt.plot(x, y_EV_nrm, label='Nrm_EV_Charging_Demand', linewidth=2, color='blue')
+            plt.plot(x, y_Buildings_nrm, label='Nrm_Bldgs_Electric_Demand', linewidth=2, color='red')
+            plt.xlabel(r'Hour')
+            plt.ylabel(r'Normalized_Electric_Demand')
+            plt.legend()
+            plt.savefig('figures/Nrm_EV_vs_Bldgs_E_Load_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
+            
+            # Plot the variation of the grid price throughout the 3 selected days
+            plt.close('all')
+            plt.figure(figsize=(10,5))
+            y_grid_E_price = Buy_Price[hours]
+            plt.plot(x, y_grid_E_price, linewidth=2, color='black')
+            plt.xlabel(r'Hour')
+            plt.ylabel(r'Grid_avg_E_price ($/kW)')
+            plt.savefig('figures/Grid_avg_E_price_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
+            
+            # Plot the normalized variation of the grid price throughout the 3 selected days
+            plt.figure(figsize=(10,5))
+            y_grid_E_price_nrm = Buy_Price[hours]/max(Buy_Price[hours])
+            plt.plot(x, y_grid_E_price_nrm, linewidth=2, color='black')
+            plt.xlabel(r'Hour')
+            plt.ylabel(r'Normalized_Grid_avg_E_price')
+            plt.savefig('figures/Nrm_Grid_avg_E_price_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
+            
+            # Plot the variation of the grid price throughout the 3 selected days
+            plt.figure(figsize=(10,5))
+            y_emissions = Grid_Emissions[hours] / MT_to_lbs * 1000
+            plt.plot(x, y_emissions, linewidth=2, color='black')
+            plt.xlabel(r'Hour')
+            plt.ylabel(r'Grid_avg_marginal_emissions (kg CO2e/kW)')
+            plt.savefig('figures/Grid_avg_marginal_emissions_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
+            
+            # Plot the normalized variation of the grid price throughout the 3 selected days
+            plt.close('all')
+            plt.figure(figsize=(10,5))
+            y_emissions_nrm = Grid_Emissions[hours] / max(Grid_Emissions[hours])
+            plt.plot(x, y_emissions_nrm, linewidth=2, color='black')
+            plt.xlabel(r'Hour')
+            plt.ylabel(r'Normalized_Grid_avg_marginal_emissions')
+            plt.savefig('figures/Nrm_Grid_avg_marginal_emissions_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
+            
+            
+            # Plot the combined plots for the 3 selected days
+            plt.figure(figsize=(10,5))
+            plt.plot(x, y_EV_nrm, label='EV_Charging_Demand', linewidth=2, color='blue')
+            plt.plot(x, y_Buildings_nrm, label='Bldgs_Electricity_Demand', linewidth=2, color='red')
+            plt.plot(x, y_grid_E_price_nrm, label='Grid_Avg_Purchase_Price', linewidth=2, color='green')
+            plt.plot(x, y_emissions_nrm, label='Grid_Avg_Emissions', linewidth=2, color='black')
+            plt.legend()
+            plt.xlabel(r'Hour')
+            plt.ylabel(r'Normalized_Electric_Demand | Grid_Price | Grid_Emissions')
+            plt.savefig('figures/Combined_Normalized_Plots_%s_%s.png'%(day_name,current_time), dpi=400, bbox_inches='tight')
+            
+            plt.close('all')
         # y_
-        sys.exit(1)
+        # sys.exit(1)
 
 
     # Return format: fitness values = return[0]; constraint values = return[1]; Results = np.append(Results, [fit[2]], axis=0)
