@@ -1,7 +1,8 @@
 backup/
-Results/
+Results/*
 superceded/
 __pycache__/
 *.png
 *.pyc
 *.cpython-38.pyc
+*.sbatch
